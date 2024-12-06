@@ -8,7 +8,7 @@ class LoginPagePro extends StatefulWidget {
   @override
   State<LoginPagePro> createState() => _LoginPageProState();
 
-  
+
 }
 
 class _LoginPageProState extends State<LoginPagePro> {
@@ -23,12 +23,14 @@ class _LoginPageProState extends State<LoginPagePro> {
       // Show error if fields are empty
       _showError("Please enter both email and password.");
       return;
+
     }
 
     // Prepare data for login
     final Map<String, dynamic> loginData = {
       'email': email,
       'password': password,
+      
     };
 
     try {
