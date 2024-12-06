@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/fyptestfinal.iml" filepath="$PROJECT_DIR$/fyptestfinal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/fyptestfinal_android.iml" filepath="$PROJECT_DIR$/android/fyptestfinal_android.iml" />
+    </modules>
+  </component>
+</project>
