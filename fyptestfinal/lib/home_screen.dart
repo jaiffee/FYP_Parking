@@ -17,10 +17,10 @@ class _HomePageState extends State<HomePage> {
 
   // Define the list of pages corresponding to each BottomNavigationBar item
   final List<Widget> _pages = [
-    BookingPage(),
-    HistoryPage(),
-    ProfilePage(),
-    ReservationsPage(),
+    const BookingPage(),
+    const HistoryPage(),
+    const ProfilePage(),
+    const ReservationsPage(),
   ];
 
   // Update the page content based on selected index
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.deepPurpleAccent, Colors.purple],
                 ),
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: Text(
                   widget.username,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
