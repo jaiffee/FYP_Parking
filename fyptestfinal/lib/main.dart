@@ -16,8 +16,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Login Page',
       theme: ThemeData(
-        primarySwatch:
-            Colors.deepPurple, // Set to deep purple to align with the theme
+        primarySwatch: const MaterialColor(
+          0xFF422672, // Deep purple color value
+          <int, Color>{
+            50: Color(0xFFE1D4F7),
+            100: Color(0xFFD1A9E0),
+            200: Color(0xFFB57CC9),
+            300: Color(0xFF9A4FC4),
+            400: Color(0xFF8737BF),
+            500: Color(0xFF422672), // Main deep purple color
+            600: Color(0xFF3B2263),
+            700: Color(0xFF331E59),
+            800: Color(0xFF2A1950),
+            900: Color(0xFF1E1441),
+          },
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const LoginPage(),
