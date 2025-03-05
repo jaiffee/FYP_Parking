@@ -81,12 +81,15 @@
       "appId": "idcfwggqzmnqmjrrncznqaggwhcxbjof",
       "appName": "beta_enrollment",
       "data": {
-         "enable": true
+         "enable": true,
+         "inhouse_entry_enabled": true,
+         "inhouse_upsell_enabled": true,
+         "testflight_entry_enabled": true
       },
       "effectStrategy": "launch",
       "instanceId": "bzatjpaqglyyxiaqtufvrwcynulkjazt",
       "type": "normal",
-      "version": "1003"
+      "version": "1007"
    }, {
       "appId": "e54758ece3475afa1b2a65wsefd0db36",
       "appName": "ads_block",
@@ -338,5 +341,5 @@
       "type": "builtin",
       "version": "1003"
    } ],
-   "version": "202412180002"
+   "version": "202503050001"
 }

@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const LoginPage(),
+      debugShowCheckedModeBanner: false, // This removes the debug banner
     );
   }
 }

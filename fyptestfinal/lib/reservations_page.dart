@@ -6,10 +6,7 @@ class ReservationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reservations'),
-        backgroundColor: Colors.deepPurpleAccent,
-      ),
+      
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -23,7 +20,7 @@ class ReservationsPage extends StatelessWidget {
           children: [
             _buildReservationCard(
               'Reservation 1',
-              'Reserved by John Doe',
+              'Reserved by waqas ',
               '12/12/2024, 2:00 PM',
               Icons.event,
               context,

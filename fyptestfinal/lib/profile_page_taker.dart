@@ -6,10 +6,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        backgroundColor: Colors.deepPurpleAccent,
-      ),
+    
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -22,8 +19,8 @@ class ProfilePage extends StatelessWidget {
         child: ListView(
           children: [
             _buildProfileCard(
-              'John Doe',
-              'johndoe@example.com',
+              'waqas',
+              'waqas@example.com',
               Icons.account_circle,
             ),
             const SizedBox(height: 16),

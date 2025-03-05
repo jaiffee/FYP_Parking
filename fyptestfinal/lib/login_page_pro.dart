@@ -7,8 +7,6 @@ class LoginPagePro extends StatefulWidget {
 
   @override
   State<LoginPagePro> createState() => _LoginPageProState();
-
-
 }
 
 class _LoginPageProState extends State<LoginPagePro> {
@@ -20,35 +18,27 @@ class _LoginPageProState extends State<LoginPagePro> {
     final String password = _passwordController.text;
 
     if (email.isEmpty || password.isEmpty) {
-      // Show error if fields are empty
       _showError("Please enter both email and password.");
       return;
-
     }
 
-    // Prepare data for login
     final Map<String, dynamic> loginData = {
       'email': email,
       'password': password,
-      
     };
 
     try {
-      final response = await ApiService.providerLogin(
-          loginData); // Call the provider login API
+      final response = await ApiService.providerLogin(loginData);
 
       if (response["success"] == true) {
-        // If login is successful, navigate to HomePagePro
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const MainHomePage()),
         );
       } else {
-        // If login fails, show an error message
         _showError(response["message"]);
       }
     } catch (e) {
-      // Handle any other errors (like network issues)
       _showError("An error occurred. Please try again.");
     }
   }
@@ -66,9 +56,9 @@ class _LoginPageProState extends State<LoginPagePro> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Provider'),
-        backgroundColor:
-            Colors.deepPurpleAccent, // Match the deep purple accent theme
+        title: const Text('Parking providor'),
+        backgroundColor: Colors.deepPurpleAccent,
+        automaticallyImplyLeading: false, // Removes the back button
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -83,26 +73,24 @@ class _LoginPageProState extends State<LoginPagePro> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Logo
             Center(
               child: Image.asset(
-                'lib/assets/logo.png', // Path to the logo image
-                width: 300, // Adjust size as needed
+                'lib/assets/logo.png',
+                width: 300,
                 height: 100,
               ),
             ),
-            const SizedBox(height: 9), // Space between logo and text fields
+            const SizedBox(height: 9),
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.black), // Black label text
+                labelStyle: TextStyle(color: Colors.black),
                 filled: true,
-                fillColor: Colors.white, // White background
+                fillColor: Colors.white,
                 border: OutlineInputBorder(),
               ),
-              style: const TextStyle(
-                  color: Colors.black), // Black text inside the field
+              style: const TextStyle(color: Colors.black),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 9),
@@ -110,21 +98,19 @@ class _LoginPageProState extends State<LoginPagePro> {
               controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
-                labelStyle: TextStyle(color: Colors.black), // Black label text
+                labelStyle: TextStyle(color: Colors.black),
                 filled: true,
-                fillColor: Colors.white, // White background
+                fillColor: Colors.white,
                 border: OutlineInputBorder(),
               ),
-              style: const TextStyle(
-                  color: Colors.black), // Black text inside the field
+              style: const TextStyle(color: Colors.black),
               obscureText: true,
             ),
             const SizedBox(height: 9),
             ElevatedButton(
-              onPressed: _login, // Call the login function
+              onPressed: _login,
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.deepPurpleAccent, // Keep the original color
+                backgroundColor: Colors.deepPurpleAccent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

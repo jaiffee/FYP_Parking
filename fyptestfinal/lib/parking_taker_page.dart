@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'api_service.dart'; // API service for taker signup
 
 class ParkingTakerPage extends StatefulWidget {
@@ -10,6 +12,28 @@ class ParkingTakerPage extends StatefulWidget {
 
 class _ParkingTakerPageState extends State<ParkingTakerPage> {
   final _formKey = GlobalKey<FormState>();
+
+  final ImagePicker _picker = ImagePicker();
+  File? _cnicImage;
+  File? _profileImage;
+
+  // Function to pick image from camera or gallery
+  Future<void> _pickImage(bool isCnic) async {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.camera, // Change to ImageSource.gallery if needed
+      imageQuality: 80, // Reduce quality to optimize performance
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        if (isCnic) {
+          _cnicImage = File(pickedFile.path);
+        } else {
+          _profileImage = File(pickedFile.path);
+        }
+      });
+    }
+  }
 
   // Controllers for each form field
   final TextEditingController _nameController = TextEditingController();
@@ -158,6 +182,18 @@ class _ParkingTakerPageState extends State<ParkingTakerPage> {
                 ),
                 const SizedBox(height: 16),
 
+                _buildUploadCard(
+              'CNIC Picture',
+              true,
+            ),
+            const SizedBox(height: 16),
+
+            _buildUploadCard(
+              'upload your live picture',
+              true,
+            ),
+            const SizedBox(height: 16),
+
                 // Submit Button
                 ElevatedButton(
                   onPressed: () async {
@@ -226,6 +262,63 @@ class _ParkingTakerPageState extends State<ParkingTakerPage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+Widget _buildUploadCard(String title, bool isCnic) {
+    return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      color: Colors.white.withOpacity(0.9),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            ),
+            const SizedBox(height: 10),
+            // Display selected image
+            Container(
+              height: 150,
+              width: 200,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.deepPurpleAccent, width: 2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: (isCnic ? _cnicImage : _profileImage) != null
+                  ? Image.file(
+                      isCnic ? _cnicImage! : _profileImage!,
+                      fit: BoxFit.cover,
+                    )
+                  : const Center(
+                      child: Text(
+                        "No Image Selected",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton.icon(
+              onPressed: () => _pickImage(isCnic),
+              icon: const Icon(Icons.camera_alt),
+              label: const Text("Capture Image"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurpleAccent,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

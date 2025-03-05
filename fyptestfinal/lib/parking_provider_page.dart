@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'api_service.dart'; // API service for provider signup
 
 class ParkingProviderPage extends StatefulWidget {
@@ -6,18 +8,37 @@ class ParkingProviderPage extends StatefulWidget {
 
   @override
   _ParkingProviderPageState createState() => _ParkingProviderPageState();
+
 }
 
 class _ParkingProviderPageState extends State<ParkingProviderPage> {
   final _formKey = GlobalKey<FormState>();
 
+  final ImagePicker _picker = ImagePicker();
+  File? _cnicImage;
+  File? _profileImage;
+
+  // Function to pick image from camera or gallery
+  Future<void> _pickImage(bool isCnic) async {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.camera, // Change to ImageSource.gallery if needed
+      imageQuality: 80, // Reduce quality to optimize performance
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        if (isCnic) {
+          _cnicImage = File(pickedFile.path);
+        } else {
+          _profileImage = File(pickedFile.path);
+        }
+      });
+    }
+  }
+
   // Controllers for each form field
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _numberController = TextEditingController();
-  final TextEditingController _nationalCardController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _workingDaysController = TextEditingController();
-  final TextEditingController _perHourRateController = TextEditingController();
+  final TextEditingController _cinicController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -27,11 +48,7 @@ class _ParkingProviderPageState extends State<ParkingProviderPage> {
       // Create the provider data object
       final providerData = {
         'name': _nameController.text,
-        'number': _numberController.text,
-        'cardNum': _nationalCardController.text,
-        'location': _locationController.text,
-        'dayAndTime': _workingDaysController.text,
-        'perHourRate': _perHourRateController.text,
+        'cnic': _cinicController.text,
         'email': _emailController.text,
         'password': _passwordController.text,
       };
@@ -127,89 +144,6 @@ class _ParkingProviderPageState extends State<ParkingProviderPage> {
                 ),
                 const SizedBox(height: 16),
 
-                // Number Field
-                TextFormField(
-                  controller: _numberController,
-                  decoration: const InputDecoration(
-                    labelText: 'Number',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your number';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // National Card Number Field
-                TextFormField(
-                  controller: _nationalCardController,
-                  decoration: const InputDecoration(
-                    labelText: 'National Card Number',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your National Card Number';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // Location of Parking Field
-                TextFormField(
-                  controller: _locationController,
-                  decoration: const InputDecoration(
-                    labelText: 'Location of Parking',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the parking location';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // Working Days and Timings Field
-                TextFormField(
-                  controller: _workingDaysController,
-                  decoration: const InputDecoration(
-                    labelText: 'Working Days and Timings',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter working days and timings';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // Per Hour Rate Field
-                TextFormField(
-                  controller: _perHourRateController,
-                  decoration: const InputDecoration(
-                    labelText: 'Per Hour Rate',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the per hour rate';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-
                 // Email Field
                 TextFormField(
                   controller: _emailController,
@@ -226,6 +160,22 @@ class _ParkingProviderPageState extends State<ParkingProviderPage> {
                       return 'Please enter a valid email address';
                     }
                     return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                TextFormField(
+                  controller: _cinicController,
+                  decoration: const InputDecoration(
+                    labelText: 'CNIC',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your cnic';
+                    }
+                  return null;
                   },
                 ),
                 const SizedBox(height: 16),
@@ -249,6 +199,18 @@ class _ParkingProviderPageState extends State<ParkingProviderPage> {
                 ),
                 const SizedBox(height: 16),
 
+              _buildUploadCard(
+              'CNIC Picture',
+              true,
+            ),
+            const SizedBox(height: 16),
+
+            _buildUploadCard(
+              'upload your live picture',
+              true,
+            ),
+            const SizedBox(height: 16),
+
                 // Submit Button
                 ElevatedButton(
                   onPressed: _submitForm,
@@ -264,6 +226,63 @@ class _ParkingProviderPageState extends State<ParkingProviderPage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUploadCard(String title, bool isCnic) {
+    return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      color: Colors.white.withOpacity(0.9),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            ),
+            const SizedBox(height: 10),
+            // Display selected image
+            Container(
+              height: 150,
+              width: 200,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.deepPurpleAccent, width: 2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: (isCnic ? _cnicImage : _profileImage) != null
+                  ? Image.file(
+                      isCnic ? _cnicImage! : _profileImage!,
+                      fit: BoxFit.cover,
+                    )
+                  : const Center(
+                      child: Text(
+                        "No Image Selected",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton.icon(
+              onPressed: () => _pickImage(isCnic),
+              icon: const Icon(Icons.camera_alt),
+              label: const Text("Capture Image"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurpleAccent,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,3 +1,6 @@
-2024/12/23-02:45:59.921 2f04 Reusing MANIFEST C:\Users\HP\AppData\Local\Temp\flutter_tools.f84b55e2\flutter_tools_chrome_device.592cf89d\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
-2024/12/23-02:45:59.923 2f04 Recovering log #3
-2024/12/23-02:45:59.924 2f04 Reusing old log C:\Users\HP\AppData\Local\Temp\flutter_tools.f84b55e2\flutter_tools_chrome_device.592cf89d\Default\EdgeCoupons/coupons_data.db/000003.log 
+2025/03/05-19:46:02.568 1dec Reusing MANIFEST C:\Users\HP\AppData\Local\Temp\flutter_tools.b384e601\flutter_tools_chrome_device.395ef07e\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2025/03/05-19:46:02.570 1dec Recovering log #4
+2025/03/05-19:46:02.571 1dec Reusing old log C:\Users\HP\AppData\Local\Temp\flutter_tools.b384e601\flutter_tools_chrome_device.395ef07e\Default\EdgeCoupons/coupons_data.db/000004.log 
+2025/03/05-19:46:04.715 2908 Level-0 table #8: started
+2025/03/05-19:46:04.763 2908 Level-0 table #8: 668427 bytes OK
+2025/03/05-19:46:04.772 2908 Delete type=0 #4
